@@ -1,0 +1,21 @@
+{
+  "name": "onelint",
+  "version": "0.0.0",
+  "description": "One lint to er to rule them all, and in the darkness bind them.",
+  "main": "index.js",
+  "bin": {
+    "onelint": "./cli.js"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Gustav Nikolaj Olsen <gno@one.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "2.3.3",
+    "unexpected": "9.16.1"
+  },
+  "dependencies": {
+    "standard-engine": "2.2.0"
+  }
+}
