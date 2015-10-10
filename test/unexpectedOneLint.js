@@ -11,6 +11,9 @@ function flattenLintReportMessages(lintReport) {
     return flattenedMessages;
 }
 
+// Don't punish the first text for the upstart time of onelint
+onelint.lintText(';', function () {});
+
 module.exports = {
     name: 'unexpected-onelint',
     installInto: function (expect) {
