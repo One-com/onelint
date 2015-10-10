@@ -1,63 +1,63 @@
 var onelint = require('../');
+var _ = require('lodash');
+
+function flattenLintReportMessages(lintReport) {
+    var flattenedMessages = [];
+    lintReport.results.forEach(function (result) {
+        result.messages.forEach(function (message) {
+            flattenedMessages.push(message);
+        });
+    });
+    return flattenedMessages;
+}
 
 module.exports = {
     name: 'unexpected-onelint',
     installInto: function (expect) {
         expect
             .addType({
-                name: 'LintResultMessages',
-                base: 'array',
+                name: 'LintMessage',
+                base: 'object',
                 identify: function (value) {
-                    return Array.isArray(value) && value._isLintResultMessages && value.every(function (item) {
-                        return (
-                            item && typeof item === 'object' &&
-                            typeof item.errorCount === 'number' &&
-                            typeof item.warningCount === 'number' &&
-                            Array.isArray(item.messages)
-                        );
-                    });
+                    return (
+                        value && typeof value === 'object' &&
+                        typeof value.ruleId === 'string' &&
+                        typeof value.severity === 'number' &&
+                        typeof value.line === 'number' &&
+                        typeof value.column === 'number' &&
+                        typeof value.message === 'string' &&
+                        typeof value.source === 'string' &&
+                        typeof value.fix === 'object'
+                    );
                 },
-                inspect: function (results, depth, output, inspect) {
-                    var messages = [];
-                    results.forEach(function (result) {
-                        result.messages.forEach(function (message) {
-                            // TODO Build messages in the following format:
-                            // Line X: <message> (column Y)
-                            messages.push(message.message);
-                        });
-                    });
-
-                    output.text('LintResultMessages(')
-                        .append(inspect(messages))
-                        .text(')')
+                inspect: function (message, depth, output, inspect) {
+                    output
+                        .text('Line ')
+                        .append(inspect(message.line))
+                        .text(', column ')
+                        .append(inspect(message.column))
+                        .text(': ')
+                        .append(message.message);
                 }
             })
-            .addAssertion('<LintResultMessages> to have messages satisfying <array>', function (expect, subject, value) {
-                var messages = [];
-
-                subject.forEach(function (result) {
-                    result.messages.forEach(function (message) {
-                        messages.push(message.message);
-                    });
-                })
-
-                return expect(messages, 'to satisfy', value);
+            .addAssertion('<LintMessage> to satisfy <string>', function (expect, subject, value) {
+                return expect(subject.message, 'to satisfy', value);
             })
-            .addAssertion('<LintResultMessages> to have messages equal to <array>', function (expect, subject, value) {
-                var messages = [];
-
-                subject.forEach(function (result) {
-                    result.messages.forEach(function (message) {
-                        messages.push(message.message);
-                    });
-                })
-
-                return expect(messages, 'to equal', value);
+            .addAssertion('<LintMessage> to satisfy <regexp>', function (expect, subject, value) {
+                return expect(subject.message, 'to satisfy', value);
+            })
+            .addAssertion('<LintMessage> to satisfy <object>', function (expect, subject, value) {
+                var propertiesToCompare = Object.keys(subject).filter(function (prop) {
+                    return Object.keys(value).indexOf(prop) !== -1;
+                });
+                var actual = _.pick(subject, propertiesToCompare);
+                var expected = _.pick(value, propertiesToCompare);
+                return expect(actual, 'to satisfy', expected);
             });
 
         expect
             .addType({
-                name: 'LintResult',
+                name: 'LintReport',
                 base: 'object',
                 identify: function (value) {
                     return (
@@ -68,28 +68,36 @@ module.exports = {
                     );
                 },
                 inspect: function (lintResult, depth, output, inspect) {
-                    output.text('LintResult(')
-                        .text('errorCount: ')
+                    output.text('LintReport(').nl()
+                        .indentLines()
+                        .i().text('errorCount: ')
                         .append(inspect(lintResult.errorCount))
-                        .text(', ')
-                        .text('warningCount: ')
-                        .append(inspect(lintResult.errorCount))
-                        .text(', ')
-                        .append(inspect(lintResult.results, depth))
-                        .text(')');
+                        .text(',').nl()
+                        .i().text('warningCount: ')
+                        .append(inspect(lintResult.warningCount))
+                        .text(',').nl()
+                        .i().text('messages: ')
+                        .block(inspect(flattenLintReportMessages(lintResult), depth))
+                        .nl().text(')');
                 }
             })
-            .addAssertion('<LintResult> to have an error count of <number>', function (expect, subject, value) {
+            .addAssertion('<LintReport> to have an error count of <number>', function (expect, subject, value) {
                 return expect(subject.errorCount, 'to equal', value);
             })
-            .addAssertion('<LintResult> to have an error count greater than <number>', function (expect, subject, value) {
+            .addAssertion('<LintReport> to have an error count greater than <number>', function (expect, subject, value) {
                 return expect(subject.errorCount, 'to be greater than', value);
             })
-            .addAssertion('<LintResult> to have messages satisfying <array>', function (expect, subject, value) {
-                return expect(subject.results, 'to have messages satisfying', value);
+            .addAssertion('<LintReport> to have messages satisfying <array>', function (expect, subject, value) {
+                var flattenedMessages = flattenLintReportMessages(subject);
+                return expect(flattenedMessages, 'to satisfy', value);
             })
-            .addAssertion('<LintResult> to have messages equal to <array>', function (expect, subject, value) {
-                return expect(subject.results, 'to have messages equal to', value);
+            .addAssertion('<LintReport> to have message satisfying <string|regexp>', function (expect, subject, value) {
+                var flattenedMessages = flattenLintReportMessages(subject);
+                return expect(flattenedMessages, 'to satisfy', [value]);
+            })
+            .addAssertion('<LintReport> to have messages equal to <array>', function (expect, subject, value) {
+                var flattenedMessages = flattenLintReportMessages(subject);
+                return expect(flattenedMessages, 'to equal', value);
             });
 
         expect
@@ -97,7 +105,6 @@ module.exports = {
                 return expect.promise(function (run) {
                     onelint.lintText(subject, run(function (err, result) {
                         if (err) { return expect.fail(err); }
-                        result.results._isLintResultMessages = true
                         return expect(result, 'to have messages equal to', []);
                     }));
                 });
@@ -109,7 +116,6 @@ module.exports = {
                             throw err;
                         }
                         expect(result, 'to have an error count greater than', 0);
-                        result.results._isLintResultMessages = true
                         return result;
                     }));
                 });
