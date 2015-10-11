@@ -23,4 +23,26 @@ describe('onelint', function () {
             ]);
         });
     });
+    describe('4 space indentation', function () {
+        it('should pass a valid example', function () {
+            return expect(
+                'if (true) {\n' +
+                '    foo = false;\n' +
+                '}',
+                'to lint without errors'
+            );
+        });
+        it('should pass a valid example', function () {
+            return expect(
+                'if (true) {\n' +
+                '   foo = false;\n' +
+                '}',
+                'to lint with errors'
+            ).then(function (result) {
+                return expect(result, 'to have messages satisfying', [
+                    'Expected indentation of 4 space characters but found 3.'
+                ]);
+            });
+        });
+    });
 });
