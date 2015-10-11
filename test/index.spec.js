@@ -45,4 +45,19 @@ describe('onelint', function () {
             });
         });
     });
+    describe('single quotes', function () {
+        it('should not complain about single quotes', function () {
+            return expect("var foo = 'bar';", 'to lint without errors');
+        });
+        it('should complain about double quotes', function () {
+            return expect('var foo = "bar";', 'to lint with error').then(function (result) {
+                return expect(result, 'to have messages satisfying', [
+                    'Strings must use singlequote.'
+                ]);
+            })
+        });
+        it('should not complain about double quotes to avoid escaping', function () {
+            return expect('var foo = "ba\'r";', 'to lint without errors');
+        });
+    });
 });
