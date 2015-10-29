@@ -8,7 +8,7 @@ describe('onelint', function () {
             "var foo = 'bar'",
             'to lint with error'
         ).then(function (result) {
-            return expect(result, 'to have message satisfying', 'Missing semicolon.');
+            return expect(result, 'to only have messages violating rule', 'semi');
         });
     });
     it('should error on multiple missing semicolons', function () {
@@ -17,9 +17,9 @@ describe('onelint', function () {
             'var bar = foo',
             'to lint with error'
         ).then(function (result) {
-            return expect(result, 'to have messages satisfying', [
-                'Missing semicolon.',
-                'Missing semicolon.'
+            return expect(result, 'to have violations satisfying', [
+                { ruleId: 'semi' },
+                { ruleId: 'semi' }
             ]);
         });
     });
@@ -39,9 +39,7 @@ describe('onelint', function () {
                 '}',
                 'to lint with errors'
             ).then(function (result) {
-                return expect(result, 'to have messages satisfying', [
-                    'Expected indentation of 4 space characters but found 3.'
-                ]);
+                return expect(result, 'to only have messages violating rule', 'indent');
             });
         });
     });
@@ -51,9 +49,7 @@ describe('onelint', function () {
         });
         it('should complain about double quotes', function () {
             return expect('var foo = "bar";', 'to lint with error').then(function (result) {
-                return expect(result, 'to have messages satisfying', [
-                    'Strings must use singlequote.'
-                ]);
+                return expect(result, 'to only have messages violating rule', 'quotes');
             })
         });
         it('should not complain about double quotes to avoid escaping', function () {
@@ -68,11 +64,23 @@ describe('onelint', function () {
             return expect('var foo = true !== false;', 'to lint without errors');
         });
         it('should complain about ==', function () {
-            return expect('var foo = true == false;', 'to lint with errors');
+            return expect('var foo = true == false;', 'to lint with errors').then(function (result) {
+                return expect(result, 'to have violations satisfying', [
+                    {
+                        ruleId: 'eqeqeq',
+                        message: /saw '==/
+                    }
+                ]);
+            });
         });
         it('should complain about !=', function () {
             return expect('var foo = true != false;', 'to lint with errors').then(function (result) {
-                return expect(result, 'to have messages satisfying', [ /saw '!='/ ]);
+                return expect(result, 'to have violations satisfying', [
+                    {
+                        ruleId: 'eqeqeq',
+                        message: /saw '!='/
+                    }
+                ]);
             });
         });
     })
