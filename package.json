@@ -18,5 +18,13 @@
   },
   "dependencies": {
     "standard-engine": "2.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gustavnikolaj/onelint.git"
+  },
+  "homepage": "https://github.com/gustavnikolaj/onelint",
+  "bugs": {
+    "url": "https://github.com/gustavnikolaj/onelint/issues"
   }
 }
