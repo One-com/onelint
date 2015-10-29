@@ -72,7 +72,7 @@ describe('unexpectedOneLint Assertions', function () {
             });
         });
     });
-    describe('<LintReport> to have messages satisfying <array>', function () {
+    describe('<LintReport>', function () {
         var result = {
             results: [
                 {
@@ -99,31 +99,33 @@ describe('unexpectedOneLint Assertions', function () {
             "errorCount":1,
             "warningCount":0
         };
-        it('should not error', function () {
-            var promise = expect.promise(function () {
-                return expect(result, 'to have messages satisfying', [ /semicolon/ ]);
+        describe('to have messages satisfying <array>', function () {
+            it('should not error', function () {
+                var promise = expect.promise(function () {
+                    return expect(result, 'to have messages satisfying', [ /semicolon/ ]);
+                });
+                return expect(promise, 'to be fulfilled');
             });
-            return expect(promise, 'to be fulfilled');
-        });
-        it('should error', function () {
-            return expect(expect.promise(function () {
-                return expect(result, 'to have messages satisfying', [ 'Lacking semicolon.' ]);
-            }), 'to be rejected').then(function (err) {
-                return expect(err, 'to have message',
-                    'expected\n' +
-                    'LintReport(\n' +
-                    '  errorCount: 1,\n' +
-                    '  warningCount: 0,\n' +
-                    '  messages: [ Line 1, column 16: Missing semicolon. (semi) ]\n' +
-                    ')\n' +
-                    "to have messages satisfying [ 'Lacking semicolon.' ]\n" +
-                    "\n"+
-                    "[\n" +
-                    "  Line 1, column 16: Missing semicolon. (semi) // should equal 'Lacking semicolon.'\n" +
-                    '                                               // -Missing semicolon.\n' +
-                    '                                               // +Lacking semicolon.\n' +
-                    "]"
-                );
+            it('should error', function () {
+                return expect(expect.promise(function () {
+                    return expect(result, 'to have messages satisfying', [ 'Lacking semicolon.' ]);
+                }), 'to be rejected').then(function (err) {
+                    return expect(err, 'to have message',
+                        'expected\n' +
+                        'LintReport(\n' +
+                        '  errorCount: 1,\n' +
+                        '  warningCount: 0,\n' +
+                        '  messages: [ Line 1, column 16: Missing semicolon. (semi) ]\n' +
+                        ')\n' +
+                        "to have messages satisfying [ 'Lacking semicolon.' ]\n" +
+                        "\n"+
+                        "[\n" +
+                        "  Line 1, column 16: Missing semicolon. (semi) // should equal 'Lacking semicolon.'\n" +
+                        '                                               // -Missing semicolon.\n' +
+                        '                                               // +Lacking semicolon.\n' +
+                        "]"
+                    );
+                });
             });
         });
     });
