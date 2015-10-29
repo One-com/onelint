@@ -2,6 +2,8 @@ var expect = require('unexpected')
     .clone()
     .use(require('./unexpectedOneLint'));
 
+expect.output.preferredWidth = 100;
+
 describe('unexpectedOneLint Assertions', function () {
     describe('<LintMessage>', function () {
         var lintMessage = {
@@ -153,6 +155,81 @@ describe('unexpectedOneLint Assertions', function () {
                         '                                               // -semi\n' +
                         '                                               // +eqeqeq\n' +
                         "]"
+                    );
+                });
+            });
+        });
+        describe('to have violations satisfying <array>', function () {
+            var result = {
+                results: [
+                    {
+                        filePath: '<text>',
+                        messages: [
+                            {
+                                ruleId: 'eqeqeq',
+                                severity: 2,
+                                message: 'Expected \'===\' and instead saw \'==\'.',
+                                line: 1,
+                                column: 16,
+                                nodeType: 'BinaryExpression',
+                                source: 'var foo = true == false',
+                                fix: { range: [ 17, 17 ], text: '=' }
+                            },
+                            {
+                                ruleId: 'semi',
+                                severity: 2,
+                                message: 'Missing semicolon.',
+                                line: 1,
+                                column: 24,
+                                nodeType: 'VariableDeclaration',
+                                source: 'var foo = true == false',
+                                fix: { range: [ 23, 23 ], text: ';' }
+                            }
+                        ],
+                        errorCount: 2,
+                        warningCount: 0
+                    }
+                ],
+                errorCount: 2,
+                warningCount: 0
+            };
+
+            it('should not error', function () {
+                return expect(expect.promise(function () {
+                    return expect(result, 'to have violations satisfying', [ { message: /Expected \'/, ruleId: 'eqeqeq' }, { ruleId: 'semi' } ]);
+                }), 'to be fulfilled');
+            });
+            it('should error', function () {
+                return expect(expect.promise(function () {
+                    return expect(result, 'to have violations satisfying', [ { ruleId: 'semi' }, { ruleId: 'semi' } ]);
+                }), 'to be rejected').then(function (err) {
+                    return expect(err, 'to have message',
+                        'expected\n' +
+                        'LintReport(\n' +
+                        '  errorCount: 2,\n' +
+                        '  warningCount: 0,\n' +
+                        '  messages: [\n' +
+                        '              Line 1, column 16: Expected \'===\' and instead saw \'==\'. (eqeqeq),\n' +
+                        '              Line 1, column 24: Missing semicolon. (semi)\n' +
+                        '            ]\n' +
+                        ')\n' +
+                        "to have violations satisfying [ { ruleId: 'semi' }, { ruleId: 'semi' } ]\n" +
+                        "\n"+
+                        "[\n" +
+                        '  {\n' +
+                        "    ruleId: 'eqeqeq', // should equal 'semi'\n" +
+                        '                      // -eqeqeq\n' +
+                        '                      // +semi\n' +
+                        '    severity: 2,\n' +
+                        "    message: 'Expected \\'===\\' and instead saw \\'==\\'.',\n" +
+                        '    line: 1,\n' +
+                        '    column: 16,\n' +
+                        "    nodeType: 'BinaryExpression',\n" +
+                        "    source: 'var foo = true == false',\n" +
+                        "    fix: { range: [ 17, 17 ], text: '=' }\n" +
+                        '  },\n' +
+                        '  Line 1, column 24: Missing semicolon. (semi)\n' +
+                        ']'
                     );
                 });
             });

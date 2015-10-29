@@ -54,14 +54,6 @@ module.exports = {
             })
             .addAssertion('<LintMessage> to satisfy <regexp>', function (expect, subject, value) {
                 return expect(subject.message, 'to satisfy', value);
-            })
-            .addAssertion('<LintMessage> to satisfy <object>', function (expect, subject, value) {
-                var propertiesToCompare = Object.keys(subject).filter(function (prop) {
-                    return Object.keys(value).indexOf(prop) !== -1;
-                });
-                var actual = _.pick(subject, propertiesToCompare);
-                var expected = _.pick(value, propertiesToCompare);
-                return expect(actual, 'to satisfy', expected);
             });
 
         expect
@@ -103,6 +95,10 @@ module.exports = {
             .addAssertion('<LintReport> to only have messages violating rule <string>', function (expect, subject, value) {
                 var flattenedMessages = flattenLintReportMessages(subject);
                 return expect(flattenedMessages, 'to have items satisfying', expect.it('to violate rule', value));
+            })
+            .addAssertion('<LintReport> to have violations [exhaustively] satisfying <any>', function (expect, subject, value) {
+                var flattenedMessages = flattenLintReportMessages(subject);
+                return expect(flattenedMessages, 'to [exhaustively] satisfy', value);
             })
             .addAssertion('<LintReport> to have message satisfying <string|regexp>', function (expect, subject, value) {
                 var flattenedMessages = flattenLintReportMessages(subject);
