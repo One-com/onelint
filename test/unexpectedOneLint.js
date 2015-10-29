@@ -100,7 +100,7 @@ module.exports = {
                 var flattenedMessages = flattenLintReportMessages(subject);
                 return expect(flattenedMessages, 'to satisfy', value);
             })
-            .addAssertion('<LintReport> to have messages violating rule <string>', function (expect, subject, value) {
+            .addAssertion('<LintReport> to only have messages violating rule <string>', function (expect, subject, value) {
                 var flattenedMessages = flattenLintReportMessages(subject);
                 return expect(flattenedMessages, 'to have items satisfying', expect.it('to violate rule', value));
             })
