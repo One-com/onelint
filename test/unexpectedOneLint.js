@@ -1,5 +1,4 @@
 var onelint = require('../');
-var _ = require('lodash');
 
 function flattenLintReportMessages(lintReport) {
     var flattenedMessages = [];

@@ -12,7 +12,6 @@
   "author": "Gustav Nikolaj Olsen <gno@one.com>",
   "license": "ISC",
   "devDependencies": {
-    "lodash": "3.10.1",
     "mocha": "2.3.3",
     "unexpected": "10.0.1"
   },
