@@ -83,5 +83,23 @@ describe('onelint', function () {
                 ]);
             });
         });
-    })
+    });
+    describe('ES6 modules', function () {
+        describe('import', function () {
+            it('simple import statement', function () {
+                return expect("import 'bar';", 'to lint without errors');
+            });
+            it('complex import statement', function () {
+                return expect("import foo from 'bar';", 'to lint without errors');
+            });
+        });
+        describe('export', function () {
+            it('simple export statement', function () {
+                return expect("export function foo() {};", 'to lint without errors');
+            });
+            it('default export statement', function () {
+                return expect("export default function foo() {};", 'to lint without errors');
+            });
+        });
+    });
 });
