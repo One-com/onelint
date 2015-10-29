@@ -128,6 +128,35 @@ describe('unexpectedOneLint Assertions', function () {
                 });
             });
         });
+        describe('to have messages violating rule <string>', function () {
+            it('should not error', function () {
+                return expect(expect.promise(function () {
+                    return expect(result, 'to have messages violating rule', 'semi');
+                }), 'to be fulfilled');
+            });
+            it('should error', function () {
+                return expect(expect.promise(function () {
+                    return expect(result, 'to have messages violating rule', 'eqeqeq');
+                }), 'to be rejected').then(function (err) {
+                    return expect(err, 'to have message',
+                        'expected\n' +
+                        'LintReport(\n' +
+                        '  errorCount: 1,\n' +
+                        '  warningCount: 0,\n' +
+                        '  messages: [ Line 1, column 16: Missing semicolon. (semi) ]\n' +
+                        ')\n' +
+                        "to have messages violating rule 'eqeqeq'\n" +
+                        "\n"+
+                        "[\n" +
+                        "  Line 1, column 16: Missing semicolon. (semi) // should violate rule 'eqeqeq'\n" +
+                        '                                               //\n' +
+                        '                                               // -semi\n' +
+                        '                                               // +eqeqeq\n' +
+                        "]"
+                    );
+                });
+            });
+        });
     });
     describe('<string> to lint without errors', function () {
         it('should not error', function () {
