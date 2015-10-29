@@ -60,4 +60,20 @@ describe('onelint', function () {
             return expect('var foo = "ba\'r";', 'to lint without errors');
         });
     });
+    describe('tripple equals', function () {
+        it('should not complain about tripple equals', function () {
+            return expect('var foo = true === false;', 'to lint without errors');
+        });
+        it('should not complain about !==', function () {
+            return expect('var foo = true !== false;', 'to lint without errors');
+        });
+        it('should complain about ==', function () {
+            return expect('var foo = true == false;', 'to lint with errors');
+        });
+        it('should complain about !=', function () {
+            return expect('var foo = true != false;', 'to lint with errors').then(function (result) {
+                return expect(result, 'to have messages satisfying', [ /saw '!='/ ]);
+            });
+        });
+    })
 });
