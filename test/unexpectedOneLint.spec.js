@@ -28,7 +28,7 @@ describe('unexpectedOneLint Assertions', function () {
                     return expect(lintMessage, 'to satisfy', 'Missing Semicolon.');
                 }), 'to be rejected').then(function (err) {
                     return expect(err, 'to have message',
-                        "expected Line 1, column 16: Missing semicolon. to satisfy 'Missing Semicolon.'\n" +
+                        "expected Line 1, column 16: Missing semicolon. (semi) to satisfy 'Missing Semicolon.'\n" +
                         '\n' +
                         '-Missing semicolon.\n' +
                         '+Missing Semicolon.'
@@ -47,7 +47,7 @@ describe('unexpectedOneLint Assertions', function () {
                     return expect(lintMessage, 'to satisfy', /Semicolon/);
                 }), 'to be rejected').then(function (err) {
                     return expect(err, 'to have message',
-                        'expected Line 1, column 16: Missing semicolon. to satisfy /Semicolon/'
+                        'expected Line 1, column 16: Missing semicolon. (semi) to satisfy /Semicolon/'
                     );
                 });
             });
@@ -95,14 +95,14 @@ describe('unexpectedOneLint Assertions', function () {
                     'LintReport(\n' +
                     '  errorCount: 1,\n' +
                     '  warningCount: 0,\n' +
-                    '  messages: [ Line 1, column 16: Missing semicolon. ]\n' +
+                    '  messages: [ Line 1, column 16: Missing semicolon. (semi) ]\n' +
                     ')\n' +
                     "to have messages satisfying [ 'Lacking semicolon.' ]\n" +
                     "\n"+
                     "[\n" +
-                    "  Line 1, column 16: Missing semicolon. // should equal 'Lacking semicolon.'\n" +
-                    '                                        // -Missing semicolon.\n' +
-                    '                                        // +Lacking semicolon.\n' +
+                    "  Line 1, column 16: Missing semicolon. (semi) // should equal 'Lacking semicolon.'\n" +
+                    '                                               // -Missing semicolon.\n' +
+                    '                                               // +Lacking semicolon.\n' +
                     "]"
                 );
             });
@@ -122,7 +122,7 @@ describe('unexpectedOneLint Assertions', function () {
                     "expected 'var foo = \\'bar\\'' to lint without errors\n" +
                     '\n' +
                     '[\n' +
-                    "  Line 1, column 16: Missing semicolon. // should be removed\n" +
+                    "  Line 1, column 16: Missing semicolon. (semi) // should be removed\n" +
                     ']'
                 );
             });

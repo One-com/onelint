@@ -40,7 +40,10 @@ module.exports = {
                         .text(', column ')
                         .append(inspect(message.column))
                         .text(': ')
-                        .append(message.message);
+                        .append(message.message)
+                        .text(' (')
+                        .append(message.ruleId)
+                        .text(')');
                 }
             })
             .addAssertion('<LintMessage> to satisfy <string>', function (expect, subject, value) {
