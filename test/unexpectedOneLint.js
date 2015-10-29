@@ -46,6 +46,9 @@ module.exports = {
                         .text(')');
                 }
             })
+            .addAssertion('<LintMessage> to violate rule <string>', function (expect, subject, value) {
+                return expect(subject.ruleId, 'to satisfy', value);
+            })
             .addAssertion('<LintMessage> to satisfy <string>', function (expect, subject, value) {
                 return expect(subject.message, 'to satisfy', value);
             })

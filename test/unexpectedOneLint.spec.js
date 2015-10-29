@@ -17,6 +17,25 @@ describe('unexpectedOneLint Assertions', function () {
                 "text": ";"
             }
         };
+        describe('to violate rule <string>', function () {
+            it('should not error', function () {
+                return expect(expect.promise(function () {
+                    return expect(lintMessage, 'to violate rule', 'semi');
+                }), 'to be fulfilled');
+            });
+            it('should error', function () {
+                return expect(expect.promise(function () {
+                    return expect(lintMessage, 'to violate rule', 'eqeqeq');
+                }), 'to be rejected').then(function (err) {
+                    return expect(err, 'to have message',
+                        "expected Line 1, column 16: Missing semicolon. (semi) to violate rule 'eqeqeq'\n" +
+                        '\n' +
+                        '-semi\n' +
+                        '+eqeqeq'
+                    );
+                });
+            });
+        });
         describe('to satisfy <string>', function () {
             it('should not error', function () {
                 return expect(expect.promise(function () {
