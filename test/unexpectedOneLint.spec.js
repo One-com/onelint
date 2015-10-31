@@ -7,16 +7,16 @@ expect.output.preferredWidth = 100;
 describe('unexpectedOneLint Assertions', function () {
     describe('<LintMessage>', function () {
         var lintMessage = {
-            ruleId:"semi",
-            severity:2,
-            message:"Missing semicolon.",
-            line:1,
-            column:16,
-            nodeType:"VariableDeclaration",
+            ruleId: 'semi',
+            severity: 2,
+            message: 'Missing semicolon.',
+            line: 1,
+            column: 16,
+            nodeType: 'VariableDeclaration',
             source: "var foo = 'bar'",
             fix: {
-                "range": [15, 15],
-                "text": ";"
+                range: [15, 15],
+                text: ';'
             }
         };
         describe('to violate rule <string>', function () {
@@ -78,19 +78,19 @@ describe('unexpectedOneLint Assertions', function () {
         var result = {
             results: [
                 {
-                    filePath: "<text>",
+                    filePath: '<text>',
                     messages: [
                         {
-                            ruleId:"semi",
+                            ruleId: 'semi',
                             severity:2,
-                            message:"Missing semicolon.",
-                            line:1,
-                            column:16,
-                            nodeType:"VariableDeclaration",
+                            message: 'Missing semicolon.',
+                            line: 1,
+                            column: 16,
+                            nodeType: 'VariableDeclaration',
                             source: "var foo = 'bar'",
                             fix: {
-                                "range": [15, 15],
-                                "text": ";"
+                                range: [15, 15],
+                                text: ';'
                             }
                         }
                     ],
@@ -98,8 +98,8 @@ describe('unexpectedOneLint Assertions', function () {
                     warningCount: 0
                 }
             ],
-            "errorCount":1,
-            "warningCount":0
+            errorCount:1,
+            warningCount:0
         };
         describe('to have messages satisfying <array>', function () {
             it('should not error', function () {
@@ -120,12 +120,12 @@ describe('unexpectedOneLint Assertions', function () {
                         '  messages: [ Line 1, column 16: Missing semicolon. (semi) ]\n' +
                         ')\n' +
                         "to have messages satisfying [ 'Lacking semicolon.' ]\n" +
-                        "\n"+
-                        "[\n" +
+                        '\n'+
+                        '[\n' +
                         "  Line 1, column 16: Missing semicolon. (semi) // should equal 'Lacking semicolon.'\n" +
                         '                                               // -Missing semicolon.\n' +
                         '                                               // +Lacking semicolon.\n' +
-                        "]"
+                        ']'
                     );
                 });
             });
@@ -148,13 +148,13 @@ describe('unexpectedOneLint Assertions', function () {
                         '  messages: [ Line 1, column 16: Missing semicolon. (semi) ]\n' +
                         ')\n' +
                         "to only have messages violating rule 'eqeqeq'\n" +
-                        "\n"+
-                        "[\n" +
+                        '\n'+
+                        '[\n' +
                         "  Line 1, column 16: Missing semicolon. (semi) // should violate rule 'eqeqeq'\n" +
                         '                                               //\n' +
                         '                                               // -semi\n' +
                         '                                               // +eqeqeq\n' +
-                        "]"
+                        ']'
                     );
                 });
             });
@@ -214,8 +214,8 @@ describe('unexpectedOneLint Assertions', function () {
                         '            ]\n' +
                         ')\n' +
                         "to have violations satisfying [ { ruleId: 'semi' }, { ruleId: 'semi' } ]\n" +
-                        "\n"+
-                        "[\n" +
+                        '\n'+
+                        '[\n' +
                         '  {\n' +
                         "    ruleId: 'eqeqeq', // should equal 'semi'\n" +
                         '                      // -eqeqeq\n' +
@@ -249,7 +249,7 @@ describe('unexpectedOneLint Assertions', function () {
                     "expected 'var foo = \\'bar\\'' to lint without errors\n" +
                     '\n' +
                     '[\n' +
-                    "  Line 1, column 16: Missing semicolon. (semi) // should be removed\n" +
+                    '  Line 1, column 16: Missing semicolon. (semi) // should be removed\n' +
                     ']'
                 );
             });

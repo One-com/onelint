@@ -50,7 +50,7 @@ describe('onelint', function () {
         it('should complain about double quotes', function () {
             return expect('var foo = "bar";', 'to lint with error').then(function (result) {
                 return expect(result, 'to only have messages violating rule', 'quotes');
-            })
+            });
         });
         it('should not complain about double quotes to avoid escaping', function () {
             return expect('var foo = "ba\'r";', 'to lint without errors');
@@ -95,10 +95,10 @@ describe('onelint', function () {
         });
         describe('export', function () {
             it('simple export statement', function () {
-                return expect("export function foo() {};", 'to lint without errors');
+                return expect('export function foo() {};', 'to lint without errors');
             });
             it('default export statement', function () {
-                return expect("export default function foo() {};", 'to lint without errors');
+                return expect('export default function foo() {};', 'to lint without errors');
             });
         });
     });
