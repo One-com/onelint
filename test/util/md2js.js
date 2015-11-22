@@ -39,7 +39,7 @@ function createTestCase (codeBlock, index) {
 
     if (codeBlock.output) {
         codeBlock.output.body.split('\n').forEach(function (line) {
-            l.push('"' + line.replace('"', '\"') + '",');
+            l.push('"' + line.replace(/"/g, '\\"').replace(/\n/g, '\\n') + '",');
         });
     }
 
