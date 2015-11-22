@@ -1,7 +1,6 @@
 var fs = require('fs');
 var path = require('path');
 
-var codeBlocksRegExp =  /```(js|javascript|output)\n[^`]*```/gm;
 var codeBlockContentRegExp = /```(js|javascript|output)\n([^`]*)\n```/gm;
 
 function findCodeBlocks (fileContent) {
@@ -21,7 +20,7 @@ function findCodeBlocks (fileContent) {
             blocks.push(result);
         }
     }
-    return blocks;nosemicolons
+    return blocks;
 }
 
 function createTestCase (codeBlock, index) {
@@ -44,13 +43,9 @@ function createTestCase (codeBlock, index) {
     }
 
     l.push(']);');
-    l.push('});')
+    l.push('});');
     l.push('});');
     return l;
-}
-
-function formatOutput(output) {
-
 }
 
 function md2js (content, fileName) {

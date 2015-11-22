@@ -238,7 +238,7 @@ describe('unexpectedOneLint Assertions', function () {
     describe('<string> to lint without errors', function () {
         it('should not error', function () {
             return expect(expect.promise(function () {
-                return expect("function foo() {}; foo();", 'to lint without errors');
+                return expect('function foo() {}; foo();', 'to lint without errors');
             }), 'to be fulfilled');
         });
         it('should error', function () {
