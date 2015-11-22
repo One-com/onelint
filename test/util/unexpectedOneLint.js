@@ -1,4 +1,4 @@
-var onelint = require('../');
+var onelint = require('../../');
 
 function flattenLintReportMessages(lintReport) {
     var flattenedMessages = [];

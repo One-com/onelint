@@ -1,6 +1,6 @@
 var expect = require('unexpected')
     .clone()
-    .use(require('./unexpectedOneLint'));
+    .use(require('./util/unexpectedOneLint'));
 
 describe('onelint', function () {
     it('should error on missing semicolons', function () {
