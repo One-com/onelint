@@ -27,7 +27,7 @@ describe('onelint', function () {
         it('should pass a valid example', function () {
             return expect(
                 'if (true) {\n' +
-                '    foo = false;\n' +
+                '    var foo = false;\n' +
                 '}',
                 'to lint without errors'
             );
@@ -35,7 +35,7 @@ describe('onelint', function () {
         it('should pass a valid example', function () {
             return expect(
                 'if (true) {\n' +
-                '   foo = false;\n' +
+                '   var foo = false;\n' +
                 '}',
                 'to lint with errors'
             ).then(function (result) {
