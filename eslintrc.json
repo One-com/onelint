@@ -7,6 +7,7 @@
         "indent": [2, 4],
         "new-cap": [2],
         "no-caller": [2],
+        "no-cond-assign": [2, "except-parens"],
         "no-undef": [2],
         "no-unused-vars": [2],
         "quotes": [2, "single", "avoid-escape"],
