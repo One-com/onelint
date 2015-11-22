@@ -1,18 +1,18 @@
 You should always use single quotes.
 
 ```js
-var foo = 'this is a single quoted string';
+'this is a single quoted string';
 ```
 
 Unless you can avoid escaping by using double quotes.
 
 ```js
-var foo = "this didn't require escaping because of the double quotes!";
+"this didn't require escaping because of the double quotes!";
 ```
 
 ```js
-var foo = "bar";
+"bar";
 ```
 ```output
-Line 14, column 11: Strings must use singlequote.
+Line 14, column 1: Strings must use singlequote.
 ```

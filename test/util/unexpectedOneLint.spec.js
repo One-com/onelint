@@ -238,18 +238,18 @@ describe('unexpectedOneLint Assertions', function () {
     describe('<string> to lint without errors', function () {
         it('should not error', function () {
             return expect(expect.promise(function () {
-                return expect("var foo = 'bar';", 'to lint without errors');
+                return expect("function foo() {}; foo();", 'to lint without errors');
             }), 'to be fulfilled');
         });
         it('should error', function () {
             return expect(expect.promise(function () {
-                return expect("var foo = 'bar'", 'to lint without errors');
+                return expect("function foo() { return 'foo'; }; foo()", 'to lint without errors');
             }), 'to be rejected').then(function (err) {
                 return expect(err, 'to have message',
-                    "expected 'var foo = \\'bar\\'' to lint without errors\n" +
+                    "expected 'function foo() { return \\'foo\\'; }; foo()' to lint without errors\n" +
                     '\n' +
                     '[\n' +
-                    '  Line 1, column 16: Missing semicolon. (semi) // should be removed\n' +
+                    '  Line 1, column 40: Missing semicolon. (semi) // should be removed\n' +
                     ']'
                 );
             });

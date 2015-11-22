@@ -2,11 +2,12 @@ You should avoid using `arguments.caller` and `arguments.callee`.
 
 ```js
 function foo() {
-    var callee = arguments.callee;
-    var caller = arguments.caller;
+    var calleer = arguments.callee;
+    calleer += arguments.caller;
 }
+foo();
 ```
 ```output
-Line 5, column 18: Avoid arguments.callee.
-Line 6, column 18: Avoid arguments.caller.
+Line 5, column 19: Avoid arguments.callee.
+Line 6, column 16: Avoid arguments.caller.
 ```
