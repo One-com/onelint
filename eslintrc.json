@@ -5,6 +5,7 @@
     "rules": {
         "eqeqeq": [2],
         "indent": [2, 4],
+        "new-cap": [2],
         "quotes": [2, "single", "avoid-escape"],
         "semi": [2, "always"],
         "wrap-iife": [2, "inside"]
