@@ -1,6 +1,6 @@
 {
   "name": "onelint",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "One lint to er to rule them all, and in the darkness bind them.",
   "main": "index.js",
   "bin": {
