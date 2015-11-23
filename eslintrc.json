@@ -5,7 +5,8 @@
       "mocha": true
     },
     "ecmaFeatures": {
-        "modules": true
+        "modules": true,
+        "blockBindings": true
     },
     "rules": {
         "eqeqeq": [2],
