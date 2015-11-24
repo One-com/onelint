@@ -1,4 +1,5 @@
 {
+    "extends": [ "standard-react" ],
     "env": {
       "browser": true,
       "node": true,
