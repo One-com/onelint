@@ -1,24 +1,6 @@
 {
-    "extends": [ "standard-react" ],
-    "env": {
-      "browser": true,
-      "node": true,
-      "mocha": true
-    },
-    "ecmaFeatures": {
-        "modules": true,
-        "blockBindings": true
-    },
-    "rules": {
-        "eqeqeq": [2],
-        "indent": [2, 4],
-        "new-cap": [2, {"capIsNew": false}],
-        "no-caller": [2],
-        "no-cond-assign": [2, "except-parens"],
-        "no-undef": [2],
-        "no-unused-vars": [2],
-        "quotes": [2, "single", "avoid-escape"],
-        "semi": [2, "always"],
-        "wrap-iife": [2, "inside"]
-    }
+    "extends": [
+        "onelint",
+        "standard-react"
+    ]
 }

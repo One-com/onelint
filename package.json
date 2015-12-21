@@ -16,6 +16,7 @@
     "unexpected": "10.0.2"
   },
   "dependencies": {
+    "eslint-config-onelint": "0.0.1",
     "eslint-config-standard-react": "1.2.1",
     "eslint-plugin-react": "3.10.0",
     "standard-engine": "2.2.5"
