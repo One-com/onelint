@@ -10,7 +10,7 @@
     "test": "./cli.js"
   },
   "author": "Gustav Nikolaj Olsen <gno@one.com>",
-  "license": "ISC",
+  "license": "BSD-3-Clause",
   "dependencies": {
     "eslint": "3.9.1",
     "eslint-config-onelint": "1.1.0",
