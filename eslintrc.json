@@ -1,6 +1,5 @@
 {
     "extends": [
-        "onelint",
-        "standard-react"
+        "onelint"
     ]
 }
