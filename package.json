@@ -18,10 +18,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/gustavnikolaj/onelint.git"
+    "url": "git://github.com/One-com/onelint.git"
   },
-  "homepage": "https://github.com/gustavnikolaj/onelint",
+  "homepage": "https://github.com/One-com/onelint",
   "bugs": {
-    "url": "https://github.com/gustavnikolaj/onelint/issues"
+    "url": "https://github.com/One-com/onelint/issues"
   }
 }
