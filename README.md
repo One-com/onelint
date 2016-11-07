@@ -24,3 +24,11 @@ Set up a lint script in package.json:
 }
 ```
 
+## Editor Configuration
+
+### Atom
+
+Use the
+[linter-js-standard-engine](https://github.com/gustavnikolaj/linter-js-standard-engine)
+plugin. It will automatically detect onelint and use it.
+
