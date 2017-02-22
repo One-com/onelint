@@ -14,7 +14,7 @@
   "dependencies": {
     "eslint": "3.9.1",
     "eslint-config-onelint": "2.0.0",
-    "standard-engine": "5.1.1"
+    "standard-engine": "6.0.0"
   },
   "repository": {
     "type": "git",
